@@ -1,0 +1,43 @@
+<ion-header>
+	<ion-navbar>
+		<button ion-button menuToggle>
+			<ion-icon name="menu"></ion-icon>
+		</button>
+		<ion-title>Settings</ion-title>
+	</ion-navbar>
+</ion-header>
+
+<ion-content padding>
+	<h3>Powered by <a (click)="launchNewsApi()">News API</a> </h3>
+
+	<ng-container *ngIf="!this.apiKey || this.apiKey.length < 1">
+		<p>
+			You will need a News API key to use this app. <ion-icon name="sad"></ion-icon> That's easy! <ion-icon name="happy"></ion-icon>
+		</p>
+		<p>
+			Tap the "Register for API key" button and you 
+			will be taken to News API to create an account and obtain a key. Then simply paste your key in the field below and save 
+			it to unlock your news feed.
+		</p>
+		<ion-item>
+			<button full ion-button (click)="launchRegister()">
+				Register for API key
+			</button>
+		</ion-item>
+	</ng-container>
+
+	<ion-list>
+		<ion-item>
+			<ion-label stacked>Your API Key</ion-label>
+			<ion-input type="text" [(ngModel)]="apiKey"></ion-input>
+		</ion-item>
+		<ion-item>
+			<a (click)="showTos()">Terms of Service</a>
+		</ion-item>
+	</ion-list>
+	<ion-item *ngIf="this.apiKey && this.apiKey.length > 0">
+		<button ion-button full (click)="saveSettings()">
+			Save
+		</button>
+	</ion-item>
+</ion-content>

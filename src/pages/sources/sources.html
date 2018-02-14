@@ -1,0 +1,30 @@
+<ion-header>
+	<ion-navbar>
+		<button ion-button menuToggle>
+			<ion-icon name="menu"></ion-icon>
+		</button>
+		<ion-title>Sources <span *ngIf="getCountSelected() > 0">({{ getCountSelected() }} selected)</span>
+		</ion-title>
+	</ion-navbar>
+</ion-header>
+
+<ion-content>
+	<ion-list *ngIf="this.loadingComplete && (!this.apiSources || this.apiSources.length < 1)">
+		<p padding>There are no sources.</p>
+	</ion-list>
+	<ng-container *ngIf="this.loadingComplete && (!this.savedSources || this.savedSources.length < 1)">
+		<p padding>
+			You have no sources saved. Your list is powered by a default list of sources. 
+		</p>
+	</ng-container>
+
+	<ion-list *ngIf="this.loadingComplete && this.apiSources && this.apiSources.length > 0">
+		<p padding>
+			Select up to 20 sources to include in your news feed.
+		</p>
+		<ion-item *ngFor="let source of this.apiSources">
+			<ion-label> {{ source.name }} </ion-label>
+			<ion-checkbox [(ngModel)]="source.isSelected" (ionChange)="sourceCheckChanged($event, source)"></ion-checkbox>
+		</ion-item>
+	</ion-list>
+</ion-content>
